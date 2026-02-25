@@ -113,8 +113,13 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Progress Bar
-            LinearProgressIndicator(
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Progress Bar
+                    LinearProgressIndicator(
               value: progress,
               color: AppColors.primaryGreen,
               backgroundColor: theme.dividerColor,
@@ -193,8 +198,6 @@ class _QuizScreenState extends State<QuizScreen> {
               );
             }),
 
-            const Spacer(),
-            
             // Feedback / Explanation
             if (_isAnswered)
                 Container(
@@ -219,6 +222,11 @@ class _QuizScreenState extends State<QuizScreen> {
                         ],
                     ),
                 ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
 
             // Button
             ElevatedButton(
