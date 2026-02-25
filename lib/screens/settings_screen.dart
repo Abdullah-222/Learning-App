@@ -11,6 +11,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<SettingsController>();
     final textTheme = Theme.of(context).textTheme;
+    final String? userName = context.watch<AuthController>().userName;
+    final String initials = _getInitials(userName);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
@@ -25,9 +27,9 @@ class SettingsScreen extends StatelessWidget {
                         'Preferences',
                         style: textTheme.headlineMedium,
                     ),
-                    const CircleAvatar(
-                        backgroundColor: Color(0xFFD7F5E8),
-                        child: Text('JD', style: TextStyle(color: AppColors.primaryGreen, fontWeight: FontWeight.bold)),
+                    CircleAvatar(
+                        backgroundColor: const Color(0xFFD7F5E8),
+                        child: Text(initials, style: const TextStyle(color: AppColors.primaryGreen, fontWeight: FontWeight.bold)),
                     ),
                 ],
             ),
@@ -171,6 +173,15 @@ class SettingsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getInitials(String? name) {
+    if (name == null || name.trim().isEmpty) return '?';
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.length > 1) {
+      return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+    }
+    return parts[0].substring(0, 1).toUpperCase();
   }
 }
 
