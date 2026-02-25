@@ -14,6 +14,7 @@ class AuthController with ChangeNotifier {
   String? get errorMessage => _errorMessage;
   bool get isAuthenticated => _isAuthenticated;
   String? get userEmail => _authService.currentUserEmail;
+  String? get userName => _authService.currentUserName;
 
   Future<void> checkAuthStatus() async {
     _isAuthenticated = await _authService.isLoggedIn();
@@ -40,12 +41,12 @@ class AuthController with ChangeNotifier {
     }
   }
 
-  Future<bool> register(String email, String password) async {
+  Future<bool> register(String name, String email, String password) async {
     _setLoading(true);
     _clearError();
 
     try {
-      final success = await _authService.register(email, password);
+      final success = await _authService.register(name, email, password);
       if (success) {
         _isAuthenticated = true;
       } else {

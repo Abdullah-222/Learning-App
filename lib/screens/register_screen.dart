@@ -31,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final auth = context.read<AuthController>();
       // Using mock registration - auto logs in on success
       final success = await auth.register(
+        _nameController.text.trim(),
         _emailController.text.trim(), 
         _passwordController.text
       );

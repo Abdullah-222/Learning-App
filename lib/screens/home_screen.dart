@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:secure_learning_app/controllers/auth_controller.dart';
 import 'package:secure_learning_app/constants.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -44,6 +46,8 @@ class HomeScreen extends StatelessWidget {
 class _WelcomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userName = context.watch<AuthController>().userName ?? 'Developer';
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(40),
@@ -58,9 +62,9 @@ class _WelcomeBanner extends StatelessWidget {
             )
         ]
       ),
-      child: const Text(
-        'Welcome back, Developer',
-        style: TextStyle(
+      child: Text(
+        'Welcome back, $userName',
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 32,
           fontWeight: FontWeight.bold,
