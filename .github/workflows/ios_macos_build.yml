@@ -1,0 +1,51 @@
+name: Flutter iOS & macOS Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Flutter Doctor
+        run: flutter doctor
+
+      - name: Get packages
+        run: flutter pub get
+
+      - name: Enable macOS
+        run: flutter config --enable-macos-desktop
+
+      - name: Build macOS
+        run: flutter build macos
+
+      - name: Build iOS (unsigned)
+        run: flutter build ios --no-codesign
+
+      - name: Zip macOS app
+        run: |
+          cd build/macos/Build/Products/Release
+          zip -r macos_app.zip *.app
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-build
+          path: build/macos/Build/Products/Release/macos_app.zip
+
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: build/ios/iphoneos/Runner.app
