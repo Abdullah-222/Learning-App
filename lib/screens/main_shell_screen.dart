@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:secure_learning_app/controllers/auth_controller.dart';
 import 'package:secure_learning_app/constants.dart';
 
 import 'home_screen.dart';
@@ -48,6 +50,8 @@ class _MainShellScreenState extends State<MainShellScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final String? userName = context.watch<AuthController>().userName;
+    final String initials = _getInitials(userName);
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -75,9 +79,9 @@ class _MainShellScreenState extends State<MainShellScreen> {
                                         _getPageTitle(_currentIndex),
                                         style: textTheme.titleLarge,
                                     ),
-                                    const CircleAvatar(
-                                        backgroundColor: Color(0xFFD7F5E8), // Light green background - Keep or make dynamic?
-                                        child: Text('JD', style: TextStyle(color: AppColors.primaryGreen, fontWeight: FontWeight.bold)),
+                                    CircleAvatar(
+                                        backgroundColor: const Color(0xFFD7F5E8),
+                                        child: Text(initials, style: const TextStyle(color: AppColors.primaryGreen, fontWeight: FontWeight.bold)),
                                     ),
                                 ],
                             ),
@@ -99,12 +103,12 @@ class _MainShellScreenState extends State<MainShellScreen> {
                 appBar: AppBar(
                     title: Text(_getPageTitle(_currentIndex), style: const TextStyle(fontWeight: FontWeight.bold)),
                     backgroundColor: colorScheme.surface,
-                    actions: const [
+                    actions: [
                          Padding(
-                           padding: EdgeInsets.only(right: 16.0),
+                           padding: const EdgeInsets.only(right: 16.0),
                            child: CircleAvatar(
-                                backgroundColor: Color(0xFFD7F5E8),
-                                child: Text('JD', style: TextStyle(color: AppColors.primaryGreen, fontWeight: FontWeight.bold)),
+                                backgroundColor: const Color(0xFFD7F5E8),
+                                child: Text(initials, style: const TextStyle(color: AppColors.primaryGreen, fontWeight: FontWeight.bold)),
                             ),
                          ),
                     ],
@@ -163,6 +167,15 @@ class _MainShellScreenState extends State<MainShellScreen> {
           case 4: return 'Events';
           default: return 'Secure App';
       }
+  }
+
+  String _getInitials(String? name) {
+    if (name == null || name.trim().isEmpty) return '?';
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.length > 1) {
+      return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+    }
+    return parts[0].substring(0, 1).toUpperCase();
   }
 }
 
