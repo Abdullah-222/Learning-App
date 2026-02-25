@@ -79,21 +79,25 @@ class _VideoScreenState extends State<VideoScreen> {
           body: Column(
             children: [
               player,
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      widget.topic.title,
-                      style: Theme.of(context).textTheme.headlineSmall,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          widget.topic.title,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          widget.topic.description,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      widget.topic.description,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],

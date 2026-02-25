@@ -187,9 +187,13 @@ class _TopicCard extends StatelessWidget {
                         ),
                     ),
                      const SizedBox(height: 16),
-                     Row(
+                     Wrap(
+                         spacing: 12,
+                         runSpacing: 12,
+                         alignment: WrapAlignment.center,
                          children: [
-                             Expanded(
+                             SizedBox(
+                                 width: double.infinity,
                                  child: OutlinedButton.icon(
                                      onPressed: () {
                                          Navigator.push(context, MaterialPageRoute(builder: (_) => VideoScreen(topic: topic)));
@@ -205,8 +209,8 @@ class _TopicCard extends StatelessWidget {
                                      ),
                                  ),
                              ),
-                             const SizedBox(width: 12),
-                             Expanded(
+                             SizedBox(
+                                 width: double.infinity,
                                  child: ElevatedButton(
                                      onPressed: () async {
                                          await Navigator.push(context, MaterialPageRoute(builder: (_) => QuizScreen(topic: topic)));
